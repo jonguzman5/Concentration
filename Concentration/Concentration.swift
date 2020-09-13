@@ -11,6 +11,7 @@ import Foundation
 class Concentration {
     var cards = [Card]()
     var score = 0;
+    var singleFlipCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     
     var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
@@ -43,6 +44,14 @@ class Concentration {
                     cards[index].isMatched = true
                     score += 2
                 }
+                else {
+                    singleFlipCount[matchIndex] += 1
+                    singleFlipCount[index] += 1
+                    if singleFlipCount[index] > 1 || singleFlipCount[matchIndex] > 1 {
+                        score -= 1
+                    }
+                }
+                
                 cards[index].isFaceUp = true
             }
             else {

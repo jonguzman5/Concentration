@@ -31,10 +31,6 @@ class ViewController: UIViewController {
     
     var emoji = Dictionary<Int, String>()
     
-    //var test = ""
-    
-    //var singleFlipCount = [0, 0, 0, 0, 0, 0, 0, 0]
-    
     var flipCount = 0 {
         didSet {
             flipCountLabel.text = "Flips: \(flipCount)"
@@ -78,6 +74,7 @@ class ViewController: UIViewController {
                 }
                 else {
                     button.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+                    scoreCount = game.score
                 }
             }
         }
@@ -88,8 +85,7 @@ class ViewController: UIViewController {
             if emojiChoices.count > 0 {
                 let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
                 emoji[card.identifier] = emojiChoices.remove(at: randomIndex)
-                //test = emojiChoices[randomIndex]
-                //emojiChoices.remove(at: randomIndex)
+                //emojiChoices.remove(at: randomIndex)^
             }
         }
         return emoji[card.identifier] ?? "?"
@@ -116,8 +112,8 @@ class ViewController: UIViewController {
         for index in cardButtons.indices {
             cardButtons[index].setTitle("", for: UIControl.State.normal)
             cardButtons[index].backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
-            game.cards[index].isFaceUp = false//true
-            game.cards[index].isMatched = false//true
+            game.cards[index].isFaceUp = false
+            game.cards[index].isMatched = false
         }
     }
 }
