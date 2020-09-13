@@ -16,9 +16,24 @@ class ViewController: UIViewController {
         return (cardButtons.count + 1)/2
     }
     
-    var emojiChoices = ["👻", "🎃", "🍬", "🍭", "🍫", "🍪"]
+    var emojiSets = [[String]]()
+    var emojiChoices = ["👻", "🎃", "🍬", "🍭", "🍫", "🍪", "🍩", "🍦"]//[String]();
+    //let set1 = ["👻", "🎃", "🍬", "🍭", "🍫", "🍪", "🍩", "🍦"]
+    let set2 = ["🐼", "🐔", "🦄", "🦙", "🦘", "🦥", "🦨", "🐘"]
+    var set3 = ["🏀", "🏈", "⚾", "⚽️", "🎾", "🏐", "🏓", "⛳️",]
+    var set4 = ["😀", "😂", "🤣", "😁", "😜", "😎", "🤩", "😍"]
+    var set5 = ["🚗", "🚕", "🚌", "🏎", "🚓", "🚑", "🚒", "🚜"]
+    var set6 = ["🇺🇸", "🇨🇦", "🇲🇽", "🇧🇷", "🇬🇧", "🇯🇵", "🇨🇳", "🇰🇷"]
+    
+    override func viewDidLoad(){
+        emojiSets = [set2, set3, set4, set5, set6];
+    }
     
     var emoji = Dictionary<Int, String>()
+    
+    //var test = ""
+    
+    //var singleFlipCount = [0, 0, 0, 0, 0, 0, 0, 0]
     
     var flipCount = 0 {
         didSet {
@@ -26,6 +41,13 @@ class ViewController: UIViewController {
         }
     }
     
+    var scoreCount = 0 {
+        didSet {
+            scoreCountLabel.text = "Score: \(scoreCount)"
+        }
+    }
+    
+    @IBOutlet weak var scoreCountLabel: UILabel!
     @IBOutlet weak var flipCountLabel: UILabel!
     @IBOutlet var cardButtons: [UIButton]!
     
@@ -52,6 +74,7 @@ class ViewController: UIViewController {
                 button.setTitle("", for: UIControl.State.normal)
                 if card.isMatched {
                     button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+                    scoreCount = game.score
                 }
                 else {
                     button.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
@@ -61,30 +84,41 @@ class ViewController: UIViewController {
     }
     
     func emoji(for card: Card) -> String {
-        
         if emoji[card.identifier] == nil {
             if emojiChoices.count > 0 {
                 let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
                 emoji[card.identifier] = emojiChoices.remove(at: randomIndex)
-                //emojiChoices.remove(at: randomIndex)^
+                //test = emojiChoices[randomIndex]
+                //emojiChoices.remove(at: randomIndex)
             }
         }
         return emoji[card.identifier] ?? "?"
     }
     
+    func getNewSet() -> Array<String> {
+        return emojiSets.randomElement()!
+    }
     
-    @IBAction func restart(_ sender: UIButton) {
-        for index in cardButtons.indices {
-            cardButtons[index].setTitle("", for: UIControl.State.normal)
-            cardButtons[index].backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
-            game.cards[index].isFaceUp = false
-            game.cards[index].isMatched = false
-            //game.cards[index].identifier = getUniqueIdentifier();
+    func setNewSet() {
+        let newSet = getNewSet();
+        //print(newSet);
+        for index in emojiChoices.indices {
+            emojiChoices[index] = newSet[index];
+            //print(newSet[index]);
         }
     }
     
-
-    
-    
+    @IBAction func restart(_ sender: UIButton) {
+        flipCount = 0
+        scoreCount = 0
+        setNewSet()
+        game.shuffleCards()
+        for index in cardButtons.indices {
+            cardButtons[index].setTitle("", for: UIControl.State.normal)
+            cardButtons[index].backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+            game.cards[index].isFaceUp = false//true
+            game.cards[index].isMatched = false//true
+        }
+    }
 }
 

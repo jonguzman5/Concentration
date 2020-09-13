@@ -10,6 +10,8 @@ import Foundation
 
 class Concentration {
     var cards = [Card]()
+    var score = 0;
+    
     var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
             var foundIndex: Int?
@@ -39,6 +41,7 @@ class Concentration {
                 if cards[matchIndex].identifier == cards[index].identifier {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
+                    score += 2
                 }
                 cards[index].isFaceUp = true
             }
@@ -52,12 +55,15 @@ class Concentration {
             }
         }
     }
+    func shuffleCards(){
+        cards.shuffle()
+    }
+    
     init(numberOfPairsOfCards: Int){
         for identifier in 0..<numberOfPairsOfCards{
             let card = Card(identifier: identifier)
             cards += [card, card]//append 2 dif copys
         }
-        //HW: SHUFFLE CARDS
-        //move i's in arr w/ arc4random
+        shuffleCards()
     }
 }
