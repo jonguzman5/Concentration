@@ -51,7 +51,6 @@ class Concentration {
                         score -= 1
                     }
                 }
-                
                 cards[index].isFaceUp = true
             }
             else {

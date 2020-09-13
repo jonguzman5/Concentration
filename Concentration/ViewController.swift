@@ -17,8 +17,7 @@ class ViewController: UIViewController {
     }
     
     var emojiSets = [[String]]()
-    var emojiChoices = ["👻", "🎃", "🍬", "🍭", "🍫", "🍪", "🍩", "🍦"]//[String]();
-    //let set1 = ["👻", "🎃", "🍬", "🍭", "🍫", "🍪", "🍩", "🍦"]
+    var emojiChoices = ["👻", "🎃", "🍬", "🍭", "🍫", "🍪", "🍩", "🍦"]
     let set2 = ["🐼", "🐔", "🦄", "🦙", "🦘", "🦥", "🦨", "🐘"]
     var set3 = ["🏀", "🏈", "⚾", "⚽️", "🎾", "🏐", "🏓", "⛳️",]
     var set4 = ["😀", "😂", "🤣", "😁", "😜", "😎", "🤩", "😍"]
@@ -97,10 +96,10 @@ class ViewController: UIViewController {
     
     func setNewSet() {
         let newSet = getNewSet();
-        //print(newSet);
+        print(newSet);
         for index in emojiChoices.indices {
             emojiChoices[index] = newSet[index];
-            //print(newSet[index]);
+            emoji[index] = newSet[index]
         }
     }
     
@@ -112,8 +111,8 @@ class ViewController: UIViewController {
         for index in cardButtons.indices {
             cardButtons[index].setTitle("", for: UIControl.State.normal)
             cardButtons[index].backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
-            game.cards[index].isFaceUp = false
-            game.cards[index].isMatched = false
+            game.cards[index].isFaceUp = true
+            game.cards[index].isMatched = true
         }
     }
 }
